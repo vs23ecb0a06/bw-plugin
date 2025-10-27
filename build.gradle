@@ -25,9 +25,13 @@ repositories {
 
     // md-5 snapshots (needed for net.md-5:bungeecord-chat:1.8-SNAPSHOT pulled by Spigot 1.8.8)
     maven { url = 'https://repo.md-5.net/content/repositories/snapshots/' }
+    // md-5 releases (sometimes artifacts moved here)
+    maven { url = 'https://repo.md-5.net/content/repositories/releases/' }
 
-    // Sonatype snapshots as an additional fallback for very old SNAPSHOTs
+    // Sonatype snapshots (legacy host)
     maven { url = 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    // Sonatype snapshots (s01 new host)
+    maven { url = 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
 
     // BedWars1058 API (if available)
     maven { url = 'https://repo.andrei1058.dev/releases' }
@@ -35,6 +39,8 @@ repositories {
 
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
+    // Some Spigot 1.8.8 snapshots pull this as a transitive dependency; add explicitly to help resolution
+    compileOnly 'net.md-5:bungeecord-chat:1.8-SNAPSHOT'
 
     // Use the server-provided BedWars1058 plugin jar for API classes at compile time
     compileOnly files('bedwars-plugin-25.2.jar')
