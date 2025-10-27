@@ -1,0 +1,130 @@
+# BWQueue configuration
+# Discord bot & orchestration
+discord:
+  token: "PUT_YOUR_BOT_TOKEN_HERE"
+  # Channel and category IDs as numeric strings (Snowflakes)
+  queueVoiceChannelId: "000000000000000000"    # Players join here to enter the queue
+  waitingRoomVoiceChannelId: "000000000000000001"  # Users not eligible are moved here
+  # Where per-game resources will be created (optional). If empty, created at root.
+  gamesCategoryId: ""
+  # Text channel lifetime after game end (seconds)
+  textChannelTtlSeconds: 120
+  # Delete team voice channels when a game ends
+  deleteTeamVoiceAtEnd: true
+
+queue:
+  # type supports only 2-team modes: "3" for 2x3, "4" for 2x4
+  type: "4"                  # "3" or "4"
+  # BedWars1058 arena groups per type
+  groups:
+    "3": "3v3v3v3"
+    "4": "4v4v4v4"
+  minPlayers: 4             # Minimum players to start a game batch
+  teamSize: 2               # Keep 2 teams only; this is per-team size when type not set
+  maxTeams: 2               # Always 2 teams (Red/Green)
+  # How long to wait for more players before starting with what we have (seconds)
+  startTimeoutSeconds: 60
+  # Max concurrent games the bot will orchestrate
+  maxConcurrentGames: 5
+
+party:
+  enabled: false
+  maxMembers: 4
+
+linking:
+  codeLength: 6
+  codeTtlSeconds: 300
+  # Require users to be online on the Minecraft server to generate a code
+  requireOnlineForCode: true
+
+elo:
+  default: 0
+  tiers:
+    - name: Coal
+      range: "0-100"
+      win: 45
+      lose: -10
+      mvp: 15
+    - name: Iron
+      range: "101-200"
+      win: 40
+      lose: -10
+      mvp: 15
+    - name: Gold
+      range: "201-300"
+      win: 40
+      lose: -15
+      mvp: 15
+    - name: Diamond
+      range: "301-400"
+      win: 35
+      lose: -15
+      mvp: 10
+    - name: Emerald
+      range: "401-500"
+      win: 35
+      lose: -20
+      mvp: 10
+    - name: Sapphire
+      range: "501-600"
+      win: 30
+      lose: -20
+      mvp: 10
+    - name: Ruby
+      range: "601-700"
+      win: 30
+      lose: -25
+      mvp: 5
+    - name: Crystal
+      range: "701-800"
+      win: 25
+      lose: -25
+      mvp: 5
+    - name: Opal
+      range: "801-900"
+      win: 25
+      lose: -30
+      mvp: 5
+    - name: Amethyst
+      range: "901-1000"
+      win: 20
+      lose: -30
+      mvp: 5
+    - name: Obsidian
+      range: "1001-1200"
+      win: 20
+      lose: -35
+      mvp: 5
+    - name: Aventurine
+      range: "1201-1400"
+      win: 20
+      lose: -35
+      mvp: 5
+    - name: Quartz
+      range: "1401-1500"
+      win: 15
+      lose: -45
+      mvp: 5
+    - name: Topaz
+      range: "1501-1700"
+      win: 10
+      lose: -50
+      mvp: 5
+    - name: Pearl
+      range: "1701-1800"
+      win: 5
+      lose: -60
+      mvp: 5
+    - name: Elite
+      range: ">=1801"
+      win: 5
+      lose: -65
+      mvp: 5
+
+storage:
+  sqliteFile: "plugins/BWQueue/bwqueue.db"
+  # Maximum DB pool size (SQLite benefits from small pools)
+  maxPoolSize: 4
+
+logging:
+  debug: false

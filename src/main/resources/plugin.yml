@@ -1,0 +1,22 @@
+name: BWQueue
+main: com.example.bwqueue.BWQueuePlugin
+version: ${version}
+author: Junie
+softdepend:
+  - BedWars1058
+  - PlaceholderAPI
+  - Vault
+commands:
+  link:
+    description: Generate a one-time code to link your Discord account.
+    usage: /link
+    permission: bwqueue.link
+  bwqueue:
+    description: Admin commands for BWQueue
+    usage: /bwqueue <reload|status>
+    permission: bwqueue.admin
+permissions:
+  bwqueue.link:
+    default: true
+  bwqueue.admin:
+    default: op

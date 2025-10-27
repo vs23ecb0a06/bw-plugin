@@ -1,0 +1,16 @@
+﻿# Gradle caches/builds
+.gradle/
+**/build/
+out/
+
+# IDE
+.idea/
+*.iml
+
+# OS noise
+Thumbs.db
+.DS_Store
+
+# Ignore any jars at repo root, but keep the BedWars1058 API jar
+/*.jar
+!/bedwars-plugin-25.2.jar

@@ -1,0 +1,68 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = 'com.example'
+version = '0.1.0-SNAPSHOT'
+
+tasks.withType(JavaCompile) {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+    options.encoding = 'UTF-8'
+}
+
+repositories {
+    mavenCentral()
+    // Additional central mirror (usually redundant but harmless)
+    maven { url = 'https://repo.maven.apache.org/maven2' }
+
+    // JDA official repository (helps when specific 4.x builds are missing on Central)
+    maven { url = 'https://m2.dv8tion.net/releases' }
+
+    // Spigot snapshots for the API
+    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+
+    // md-5 snapshots (needed for net.md-5:bungeecord-chat:1.8-SNAPSHOT pulled by Spigot 1.8.8)
+    maven { url = 'https://repo.md-5.net/content/repositories/snapshots/' }
+
+    // Sonatype snapshots as an additional fallback for very old SNAPSHOTs
+    maven { url = 'https://oss.sonatype.org/content/repositories/snapshots/' }
+
+    // BedWars1058 API (if available)
+    maven { url = 'https://repo.andrei1058.dev/releases' }
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
+
+    // Use the server-provided BedWars1058 plugin jar for API classes at compile time
+    compileOnly files('bedwars-plugin-25.2.jar')
+
+    implementation 'net.dv8tion:JDA:4.4.0_352'
+    implementation 'org.slf4j:slf4j-simple:1.7.36'
+
+    implementation 'com.zaxxer:HikariCP:3.4.5' // Java 8 compatible
+    implementation 'org.xerial:sqlite-jdbc:3.36.0.3'
+}
+
+shadowJar {
+    archiveClassifier.set('')
+    relocate 'net.dv8tion', 'com.example.bwqueue.libs.jda'
+    relocate 'org.slf4j', 'com.example.bwqueue.libs.slf4j'
+    relocate 'com.zaxxer.hikari', 'com.example.bwqueue.libs.hikari'
+    relocate 'org.sqlite', 'com.example.bwqueue.libs.sqlite'
+}
+
+jar {
+    enabled = false
+}
+
+processResources {
+    filteringCharset = 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand(
+                'version': project.version
+        )
+    }
+}
